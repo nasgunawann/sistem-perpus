@@ -72,7 +72,7 @@ class PeminjamanController extends Controller
         }
 
         // Validasi maksimal peminjaman
-        $maksPinjam = Pengaturan::ambil('maks_pinjam_buku', 3);
+        $maksPinjam = (int) Pengaturan::ambil('maks_pinjam_buku', 3);
         $currentLoans = Peminjaman::where('anggota_id', $anggota->id)
             ->whereIn('status', ['dipinjam', 'terlambat'])
             ->count();
@@ -91,7 +91,7 @@ class PeminjamanController extends Controller
             $kodePeminjaman = 'PJM' . $year . str_pad($increment, 4, '0', STR_PAD_LEFT);
 
             // Calculate tanggal jatuh tempo
-            $lamaPinjam = Pengaturan::ambil('lama_peminjaman', 7);
+            $lamaPinjam = (int) Pengaturan::ambil('lama_peminjaman', 7);
             $tanggalPinjam = now();
             $tanggalJatuhTempo = now()->addDays($lamaPinjam);
 
@@ -153,7 +153,7 @@ class PeminjamanController extends Controller
                 // Ensure it's treated as integer and positive just in case
                 $hariTerlambat = abs((int) $hariTerlambat);
 
-                $tarifDenda = Pengaturan::ambil('tarif_denda', 1000);
+                $tarifDenda = (int) Pengaturan::ambil('tarif_denda', 1000);
                 $jumlahDenda = $hariTerlambat * $tarifDenda;
 
                 Denda::create([

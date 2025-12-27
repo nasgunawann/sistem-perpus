@@ -19,7 +19,7 @@
                     <option value="">Semua Status</option>
                     <option value="belum_bayar" {{ request('status') == 'belum_bayar' ? 'selected' : '' }}>Belum Bayar</option>
                     <option value="sebagian" {{ request('status') == 'sebagian' ? 'selected' : '' }}>Sebagian</option>
-                    <option value="lunas" {{ request('status') == 'lunas' ? 'selected' : '' }}>Lunas</option>
+                    <option value="sudah_bayar" {{ request('status') == 'sudah_bayar' ? 'selected' : '' }}>Sudah Bayar</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -59,14 +59,14 @@
                                 <td>Rp {{ number_format($d->jumlah_dibayar, 0, ',', '.') }}</td>
                                 <td>Rp {{ number_format($d->sisa_denda, 0, ',', '.') }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $d->status === 'lunas' ? 'success' : ($d->status === 'sebagian' ? 'warning' : 'danger') }}">
+                                    <span class="badge bg-{{ $d->status === 'sudah_bayar' ? 'success' : ($d->status === 'sebagian' ? 'warning' : 'danger') }}">
                                         {{ ucfirst(str_replace('_', ' ', $d->status)) }}
                                     </span>
                                 </td>
                                 <td>
                                     <div class="d-flex gap-1">
                                         <a href="{{ route('admin.denda.show', $d) }}" class="btn btn-sm btn-info">Detail</a>
-                                        @if($d->status !== 'lunas')
+                                        @if($d->status !== 'sudah_bayar')
                                             <a href="{{ route('admin.denda.show', $d) }}" class="btn btn-sm btn-success">Bayar</a>
                                         @endif
                                     </div>

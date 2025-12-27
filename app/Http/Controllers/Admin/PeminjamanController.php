@@ -148,8 +148,11 @@ class PeminjamanController extends Controller
             $buku->save();
 
             // Cek dan create denda jika terlambat
-            if ($tanggalKembali > $peminjaman->tanggal_jatuh_tempo) {
-                $hariTerlambat = $tanggalKembali->diffInDays($peminjaman->tanggal_jatuh_tempo);
+            if ($tanggalKembali->gt($peminjaman->tanggal_jatuh_tempo)) {
+                $hariTerlambat = $tanggalKembali->diffInDays($peminjaman->tanggal_jatuh_tempo); // Defaults to absolute
+                // Ensure it's treated as integer and positive just in case
+                $hariTerlambat = abs((int) $hariTerlambat);
+
                 $tarifDenda = Pengaturan::ambil('tarif_denda', 1000);
                 $jumlahDenda = $hariTerlambat * $tarifDenda;
 

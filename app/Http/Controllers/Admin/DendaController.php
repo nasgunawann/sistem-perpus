@@ -60,7 +60,7 @@ class DendaController extends Controller
             return back()->with('error', "Jumlah bayar tidak boleh melebihi sisa denda (Rp " . number_format($sisaDenda, 0, ',', '.') . ")");
         }
 
-        if ($denda->status === 'lunas') {
+        if ($denda->status === 'sudah_bayar') {
             return back()->with('error', 'Denda sudah lunas');
         }
 
@@ -72,7 +72,7 @@ class DendaController extends Controller
 
             // Check if lunas
             if ($denda->jumlah_dibayar >= $denda->jumlah_denda) {
-                $denda->status = 'lunas';
+                $denda->status = 'sudah_bayar';
                 $denda->tanggal_bayar = now();
                 $message = 'Pembayaran berhasil. Denda telah lunas.';
             } else {

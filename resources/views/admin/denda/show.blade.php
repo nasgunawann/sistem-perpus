@@ -36,9 +36,8 @@
                         <td><strong class="text-danger">Rp {{ number_format($denda->sisa_denda, 0, ',', '.') }}</strong></td>
                     </tr>
                     <tr>
-                        <td>Status</td>
                         <td>
-                            <span class="badge bg-{{ $denda->status === 'lunas' ? 'success' : ($denda->status === 'sebagian' ? 'warning' : 'danger') }}">
+                            <span class="badge bg-{{ $denda->status === 'sudah_bayar' ? 'success' : ($denda->status === 'sebagian' ? 'warning' : 'danger') }}">
                                 {{ ucfirst(str_replace('_', ' ', $denda->status)) }}
                             </span>
                         </td>
@@ -78,7 +77,7 @@
     </div>
 </div>
 
-@if($denda->status !== 'lunas')
+@if($denda->status !== 'sudah_bayar')
     <div class="card mb-3">
         <div class="card-header bg-white">
             <h6 class="mb-0">Form Pembayaran</h6>
